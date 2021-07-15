@@ -15,8 +15,18 @@ class Metronome extends Component {
         this.click1 = new Audio(click1);
     }
     handleBpmChange = (e) => {
-        const bpm = e.target.value;
-        this.setState({bpm});
+        const bpm = e.target.value
+        if(this.state.play) {
+            clearInterval(this.timer)
+            this.timer = setInterval(this.playClick, (60 / bpm) * 1000)
+
+            this.setState({
+                count: 0,
+                bpm
+            })
+        } else {
+            this.setState({ bpm })
+        }
     }
     startStop = () =>{
         if(this.state.play) {
